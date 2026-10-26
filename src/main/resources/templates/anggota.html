@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Daftar Anggota</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            color: #222;
+            max-width: 700px;
+            margin: 0 auto;
+            padding: 32px 20px;
+        }
+        h1 { font-size: 26px; margin: 0 0 16px; }
+        h2 { font-size: 18px; margin: 24px 0 8px; }
+        form { display: flex; gap: 6px; max-width: 480px; }
+        input {
+            flex: 1;
+            padding: 7px 9px;
+            border: 1px solid #bbb;
+            border-radius: 4px;
+            font-size: 14px;
+        }
+        input[type="number"] { max-width: 70px; }
+        button, .btn {
+            background: #1a73e8;
+            color: white;
+            border: none;
+            padding: 7px 16px;
+            border-radius: 4px;
+            font-size: 14px;
+            cursor: pointer;
+            text-decoration: none;
+        }
+        button:hover, .btn:hover { background: #1557b0; }
+        table { border-collapse: collapse; min-width: 340px; }
+        th, td { padding: 8px 14px; border: 1px solid #ccc; text-align: left; }
+        th { background: #f2f2f2; }
+        .nav { margin-top: 20px; }
+    </style>
+</head>
+<body>
+<h1>Daftar Anggota</h1>
+
+<p th:if="${#lists.isEmpty(daftarAnggota)}">Belum ada anggota.</p>
+
+<table th:unless="${#lists.isEmpty(daftarAnggota)}">
+    <tr><th>ID</th><th>Nama</th><th>Batas Pinjam</th></tr>
+    <tr th:each="a : ${daftarAnggota}">
+        <td th:text="${a.idAnggota}">A001</td>
+        <td th:text="${a.nama}">Nama</td>
+        <td th:text="${a.batasPinjam}">0</td>
+    </tr>
+</table>
+
+<h2>Tambah Anggota</h2>
+<form th:action="@{/anggota}" method="post">
+    <input name="idAnggota" placeholder="ID" required>
+    <input name="nama" placeholder="Nama" required>
+    <input name="batasPinjam" type="number" min="0" value="1">
+    <button type="submit">Simpan</button>
+</form>
+
+<div class="nav">
+    <a th:href="@{/buku}" class="btn">← Ke Daftar Buku</a>
+</div>
+</body>
+</html>
